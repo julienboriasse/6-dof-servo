@@ -1,8 +1,8 @@
 #include <mbed.h>
 
 #define PWM_PERIOD 0.02
-#define PULSE_WIDTH_MAX 0.0021
-#define PULSE_WIDTH_MIN 0.0000
+#define PULSE_WIDTH_MAX 0.0028
+#define PULSE_WIDTH_MIN 0.0003
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN USBTX
@@ -18,7 +18,6 @@ FileHandle *mbed::mbed_override_console(int fd)
 
 float map_adc_pulse_width(float adc_value)
 {
-  printf("%f\n", adc_value);
   float pulse_width = PULSE_WIDTH_MIN + (PULSE_WIDTH_MAX - PULSE_WIDTH_MIN) * adc_value;
   pulse_width = pulse_width > PULSE_WIDTH_MAX ? PULSE_WIDTH_MAX : pulse_width;
   pulse_width = pulse_width < PULSE_WIDTH_MIN ? PULSE_WIDTH_MIN : pulse_width;
@@ -67,6 +66,7 @@ int main()
     
     // Read ADC and adjust PWM pulse width
     pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));
+    printf("ADC: %.8f\tPWM: %.8f\n", ain0.read(), map_adc_pulse_width(ain0.read()));
     ThisThread::sleep_for(5ms);
     pwm1.pulsewidth(map_adc_pulse_width(ain1.read()));
     ThisThread::sleep_for(5ms);
