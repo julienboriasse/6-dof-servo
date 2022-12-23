@@ -49,8 +49,6 @@ int main()
   PwmOut pwm1(D9);
   PwmOut pwm2(D10);
   PwmOut pwm3(D11);
-  //PwmOut pwm4(D4);
-  //PwmOut pwm5(D5);
 
   // Set pwm period to 20 ms
   printf("Configure motors PWM periods\r\n");
@@ -58,8 +56,6 @@ int main()
   pwm1.period(PWM_PERIOD);
   pwm2.period(PWM_PERIOD);
   pwm3.period(PWM_PERIOD);
-  //pwm4.period(PWM_PERIOD);
-  //pwm5.period(PWM_PERIOD);
 
   while (1)
   {
@@ -74,7 +70,5 @@ int main()
     ThisThread::sleep_for(5ms);
     pwm3.pulsewidth(map_adc_pulse_width(ain3.read()));
     ThisThread::sleep_for(5ms);
-    //pwm4.pulsewidth(map_adc_pulse_width(ain4.read()));
-    //pwm5.pulsewidth(map_adc_pulse_width(ain5.read()));
   }
 }
