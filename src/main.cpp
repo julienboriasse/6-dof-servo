@@ -5,6 +5,10 @@
 #define PWM_PERIOD 0.02
 #define PULSE_WIDTH_MAX 0.0028
 #define PULSE_WIDTH_MIN 0.0003
+#define ANGLE_MIN -120
+#define ANGLE_MAX 90
+
+
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN USBTX
@@ -24,6 +28,15 @@ float map_adc_pulse_width(float adc_value)
   pulse_width = pulse_width > PULSE_WIDTH_MAX ? PULSE_WIDTH_MAX : pulse_width;
   pulse_width = pulse_width < PULSE_WIDTH_MIN ? PULSE_WIDTH_MIN : pulse_width;
   return pulse_width;
+}
+
+float map_adc_angle(float adc_value)
+{
+  float angle =  ANGLE_MIN + (ANGLE_MAX - ANGLE_MIN) * adc_value;
+  angle = angle > ANGLE_MAX ? ANGLE_MAX : angle;
+  angle = angle < ANGLE_MIN ? ANGLE_MIN : angle;
+  //printf("%.5f %.5f\n", adc_value, angle);
+  return angle;
 }
 
 int main()
@@ -47,20 +60,21 @@ int main()
 
   // Servo motors outputs
   printf("Configure motors output pins\r\n");
-
-  Servo servo0(-90, -90, PWM_PERIOD, 0.0006, 0.0022, 0.0015, D11);
-  Servo servo1(-90, -90, PWM_PERIOD, 0.0003, 0.0028, 0.0015, D10);
-  Servo servo2(-90, -90, PWM_PERIOD, 0.0003, 0.0028, 0.0015, D9);
-  Servo servo3(-90, -90, PWM_PERIOD, 0.0003, 0.0028, 0.0015, D5);
+  Servo servo0(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00148, D11);
+  Servo servo1(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00161, D10);
+  Servo servo2(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00172, D9);
+  Servo servo3(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00168, D5);
 
   while (1)
   {
     
     // Read ADC and adjust PWM pulse width
-    servo0.move(0);
-    servo1.move(0);
-    servo2.move(0);
-    servo3.move(0);
+    servo0.move(map_adc_angle(ain0.read()));
+    servo1.move(map_adc_angle(ain1.read()));
+    servo2.move(map_adc_angle(ain2.read()));
+    servo3.move(map_adc_angle(ain3.read()));
+
+    printf("\n\n\n");
 
     /*
     pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));

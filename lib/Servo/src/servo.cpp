@@ -31,6 +31,8 @@ float Servo::pulse_width(float angle)
     pulseWidth = pulseWidth > maxPulseWidth ? maxPulseWidth : pulseWidth;
     pulseWidth = pulseWidth < minPulseWidth ? minPulseWidth : pulseWidth;
     
+    printf("%.5f %.5f\n", angle, pulseWidth);
+
     return pulseWidth;
 }
 
