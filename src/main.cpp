@@ -2,7 +2,7 @@
 
 #define PWM_PERIOD 0.02
 #define PULSE_WIDTH_MAX 0.0021
-#define PULSE_WIDTH_MIN 0.0009
+#define PULSE_WIDTH_MIN 0.0000
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN USBTX
