@@ -1,5 +1,7 @@
 #include <mbed.h>
 
+#include "servo.h"
+
 #define PWM_PERIOD 0.02
 #define PULSE_WIDTH_MAX 0.0028
 #define PULSE_WIDTH_MIN 0.0003
@@ -45,22 +47,22 @@ int main()
 
   // Servo motors outputs
   printf("Configure motors output pins\r\n");
-  PwmOut pwm0(D5);
-  PwmOut pwm1(D9);
-  PwmOut pwm2(D10);
-  PwmOut pwm3(D11);
 
-  // Set pwm period to 20 ms
-  printf("Configure motors PWM periods\r\n");
-  pwm0.period(PWM_PERIOD);
-  pwm1.period(PWM_PERIOD);
-  pwm2.period(PWM_PERIOD);
-  pwm3.period(PWM_PERIOD);
+  Servo servo0(-90, -90, PWM_PERIOD, 0.0006, 0.0022, 0.0015, D11);
+  Servo servo1(-90, -90, PWM_PERIOD, 0.0003, 0.0028, 0.0015, D10);
+  Servo servo2(-90, -90, PWM_PERIOD, 0.0003, 0.0028, 0.0015, D9);
+  Servo servo3(-90, -90, PWM_PERIOD, 0.0003, 0.0028, 0.0015, D5);
 
   while (1)
   {
     
     // Read ADC and adjust PWM pulse width
+    servo0.move(0);
+    servo1.move(0);
+    servo2.move(0);
+    servo3.move(0);
+
+    /*
     pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));
     printf("ADC: %.8f\tPWM: %.8f\n", ain0.read(), map_adc_pulse_width(ain0.read()));
     ThisThread::sleep_for(5ms);
@@ -70,5 +72,6 @@ int main()
     ThisThread::sleep_for(5ms);
     pwm3.pulsewidth(map_adc_pulse_width(ain3.read()));
     ThisThread::sleep_for(5ms);
+    */
   }
 }
