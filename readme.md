@@ -1,0 +1,1 @@
+Control a 6-degrees-of-freedom robot made of servo-motors in angular mode with potentiometers.
