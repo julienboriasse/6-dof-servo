@@ -46,30 +46,34 @@ int main()
 
   // Servo motors outputs
   printf("Configure motors output pins\r\n");
-  //PwmOut pwm0(D0);
-  //PwmOut pwm1(D1);
-  //PwmOut pwm2(D2);
-  PwmOut pwm3(D5);
+  PwmOut pwm0(D5);
+  PwmOut pwm1(D9);
+  PwmOut pwm2(D10);
+  PwmOut pwm3(D11);
   //PwmOut pwm4(D4);
   //PwmOut pwm5(D5);
 
   // Set pwm period to 20 ms
   printf("Configure motors PWM periods\r\n");
-  //pwm0.period(PWM_PERIOD);
-  //pwm1.period(PWM_PERIOD);
-  //pwm2.period(PWM_PERIOD);
+  pwm0.period(PWM_PERIOD);
+  pwm1.period(PWM_PERIOD);
+  pwm2.period(PWM_PERIOD);
   pwm3.period(PWM_PERIOD);
   //pwm4.period(PWM_PERIOD);
   //pwm5.period(PWM_PERIOD);
 
   while (1)
   {
-    printf(".\r\n");
+    
     // Read ADC and adjust PWM pulse width
-    //pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));
-    //pwm1.pulsewidth(map_adc_pulse_width(ain1.read()));
-    //pwm2.pulsewidth(map_adc_pulse_width(ain2.read()));
+    pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));
+    ThisThread::sleep_for(5ms);
+    pwm1.pulsewidth(map_adc_pulse_width(ain1.read()));
+    ThisThread::sleep_for(5ms);
+    pwm2.pulsewidth(map_adc_pulse_width(ain2.read()));
+    ThisThread::sleep_for(5ms);
     pwm3.pulsewidth(map_adc_pulse_width(ain3.read()));
+    ThisThread::sleep_for(5ms);
     //pwm4.pulsewidth(map_adc_pulse_width(ain4.read()));
     //pwm5.pulsewidth(map_adc_pulse_width(ain5.read()));
   }
