@@ -4,7 +4,7 @@
 #define PULSE_WIDTH_MAX 0.0021
 #define PULSE_WIDTH_MIN 0.0009
 
-float map_adc_pulsewidth(float adc_value) {
+float map_adc_pulse_width(float adc_value) {
   float pulse_width = PULSE_WIDTH_MIN + (PULSE_WIDTH_MAX - PULSE_WIDTH_MIN) * adc_value;
   pulse_width = pulse_width > PULSE_WIDTH_MAX ? PULSE_WIDTH_MAX : pulse_width;
   pulse_width = pulse_width < PULSE_WIDTH_MIN ? PULSE_WIDTH_MIN : pulse_width;
@@ -39,11 +39,11 @@ int main() {
 
   while(1) {
     // Read ADC and adjust PWM pulse width
-    pwm0.pulsewidth(map_adc_pulsewidth(ain0.read()));
-    pwm1.pulsewidth(map_adc_pulsewidth(ain1.read()));
-    pwm2.pulsewidth(map_adc_pulsewidth(ain2.read()));
-    pwm3.pulsewidth(map_adc_pulsewidth(ain3.read()));
-    pwm4.pulsewidth(map_adc_pulsewidth(ain4.read()));
-    pwm5.pulsewidth(map_adc_pulsewidth(ain5.read()));
+    pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));
+    pwm1.pulsewidth(map_adc_pulse_width(ain1.read()));
+    pwm2.pulsewidth(map_adc_pulse_width(ain2.read()));
+    pwm3.pulsewidth(map_adc_pulse_width(ain3.read()));
+    pwm4.pulsewidth(map_adc_pulse_width(ain4.read()));
+    pwm5.pulsewidth(map_adc_pulse_width(ain5.read()));
   }
 }
