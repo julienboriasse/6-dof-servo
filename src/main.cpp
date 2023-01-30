@@ -91,15 +91,25 @@ int main()
 
         // Slowly move to target position
         for (int j = 0 ; j < 4 ; j++) {
-          if (target_positions[i][j] - current_positions[j] > 2)
+          if (target_positions[i][j] - current_positions[j] > 10)
           {
             // Start fast and slow down
             current_positions[j] =  target_positions[i][j] - (target_positions[i][j] - current_positions[j]) / 1.5;
           }
-          else if (target_positions[i][j] - current_positions[j] < -2)
+          else if (target_positions[i][j] - current_positions[j] < -10)
           {
             // Start fast and slow down
             current_positions[j] = target_positions[i][j] + (current_positions[j] - target_positions[i][j]) / 1.5;
+          }
+          else if (target_positions[i][j] - current_positions[j] > 1)
+          {
+            // Start fast and slow down
+            current_positions[j]++;
+          }
+          else if (target_positions[i][j] - current_positions[j] < -1)
+          {
+            // Start fast and slow down
+            current_positions[j]--;
           }
           else {
             printf("Servo %d is on target\r\n", j);
