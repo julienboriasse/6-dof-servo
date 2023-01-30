@@ -15,12 +15,11 @@ int current_positions[4] = {1, 1, 1, 1};
 int on_target[4] = {false, false, false, false};
 
 // target positions for each servo
-int target_positions[5][4] = {
-  {0, 0, 0, 0},
-  {-40, 15, 0, 0},
-  {10, -15, 0, 0},
-  {60, -5, 0, 0},
-  {10, 10, 0, 0},
+int target_positions[4][4] = {
+  {10, -10, -160, -50},
+  {30, -10, -160, -50},
+  {30, -5, -65, 30},
+  {10, -5, -65, 30}
 };
 
 // Specify different pins to test printing on UART other than the console UART.
@@ -75,12 +74,12 @@ int main()
   printf("Configure motors output pins\r\n");
   Servo servo0(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00148, D10);
   Servo servo1(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00161, D5);
-  Servo servo2(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00172, D9);
+  Servo servo2(-160, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00172, D9);
   Servo servo3(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00168, D11);
 
   while (1)
   {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 4; i++)
     { 
       printf("Move to target position %d\r\n", i);
       for (int j = 0 ; j < 4 ; j++) {
@@ -94,12 +93,12 @@ int main()
 
         // Slowly move to target position
         for (int j = 0 ; j < 4 ; j++) {
-          if (target_positions[i][j] - current_positions[j] > 10)
+          if (target_positions[i][j] - current_positions[j] > 20)
           {
             // Start fast and slow down
             current_positions[j] =  target_positions[i][j] - (target_positions[i][j] - current_positions[j]) / 1.5;
           }
-          else if (target_positions[i][j] - current_positions[j] < -10)
+          else if (target_positions[i][j] - current_positions[j] < -20)
           {
             // Start fast and slow down
             current_positions[j] = target_positions[i][j] + (current_positions[j] - target_positions[i][j]) / 1.5;
@@ -115,7 +114,7 @@ int main()
             current_positions[j]--;
           }
           else {
-            printf("Servo %d is on target\r\n", j);
+            // printf("Servo %d is on target\r\n", j);
             on_target[j] = true;
           }
         }
