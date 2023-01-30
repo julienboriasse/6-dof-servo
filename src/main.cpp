@@ -9,6 +9,14 @@
 #define ANGLE_MAX 90
 
 
+int target_positions[5][4] = {
+  {0, 45, 0, 20},
+  {10, 0, 15, 30},
+  {20, 45, 45, -10},
+  {2, 15, 45, -10},
+  {2, 25, 15, 0},
+};
+
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN USBTX
@@ -67,14 +75,23 @@ int main()
 
   while (1)
   {
+    for (int i = 0; i < 5; i++)
+    {
+      servo0.move(target_positions[i][0]);
+      servo1.move(target_positions[i][1]);
+      servo2.move(target_positions[i][2]);
+      servo3.move(target_positions[i][3]);
+      ThisThread::sleep_for(2s);
+    }
     
+    /*
     // Read ADC and adjust PWM pulse width
     servo0.move(map_adc_angle(ain0.read()));
     servo1.move(map_adc_angle(ain1.read()));
     servo2.move(map_adc_angle(ain2.read()));
     servo3.move(map_adc_angle(ain3.read()));
-
-    printf("\n\n\n");
+    */
+    //printf("\n\n\n");
 
     /*
     pwm0.pulsewidth(map_adc_pulse_width(ain0.read()));
