@@ -8,13 +8,15 @@
 #define ANGLE_MIN -120
 #define ANGLE_MAX 90
 
+int current_positions[4] = {1, 1, 1, 1};
+int on_target[4] = {false, false, false, false};
 
 int target_positions[5][4] = {
   {0, 45, 0, 20},
-  {10, 0, 15, 30},
-  {20, 45, 45, -10},
-  {2, 15, 45, -10},
-  {2, 25, 15, 0},
+  {45, 0, 15, 30},
+  {-45, 45, 45, -10},
+  {15, 15, 45, -10},
+  {-15, 25, 15, 0},
 };
 
 
@@ -76,11 +78,47 @@ int main()
   while (1)
   {
     for (int i = 0; i < 5; i++)
-    {
-      servo0.move(target_positions[i][0]);
-      servo1.move(target_positions[i][1]);
-      servo2.move(target_positions[i][2]);
-      servo3.move(target_positions[i][3]);
+    { 
+      printf("Move to target position %d\r\n", i);
+      for (int j = 0 ; j < 4 ; j++) {
+        on_target[j] = false;
+      }
+
+
+      // As long as not all servos are on target, keep moving
+      while (on_target[0] == false || on_target[1] == false || on_target[2] == false || on_target[3] == false)
+      {
+
+        // Slowly move to target position
+        for (int j = 0 ; j < 4 ; j++) {
+          if (target_positions[i][j] - current_positions[j] > 2)
+          {
+            // Start fast and slow down
+            current_positions[j] =  target_positions[i][j] - (target_positions[i][j] - current_positions[j]) / 1.5;
+          }
+          else if (target_positions[i][j] - current_positions[j] < -2)
+          {
+            // Start fast and slow down
+            current_positions[j] = target_positions[i][j] + (current_positions[j] - target_positions[i][j]) / 1.5;
+          }
+          else {
+            printf("Servo %d is on target\r\n", j);
+            on_target[j] = true;
+          }
+        }
+        
+        // Move servos to current position
+        servo0.move(current_positions[0]);
+        servo1.move(current_positions[1]);
+        servo2.move(current_positions[2]);
+        servo3.move(current_positions[3]);
+
+        // Wait for servos to reach current position
+        ThisThread::sleep_for(50ms);
+      }
+
+      // Pause for 2 seconds between movements
+      printf("Pause for 2 seconds\r\n\r\n");
       ThisThread::sleep_for(2s);
     }
     
