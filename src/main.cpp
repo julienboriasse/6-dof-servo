@@ -16,8 +16,8 @@ int on_target[4] = {false, false, false, false};
 
 // target positions for each servo
 int target_positions[4][4] = {
-  {10, -10, -160, -50},
-  {30, -10, -160, -50},
+  {10, -10, -160, -40},
+  {30, -10, -160, -40},
   {30, -5, -65, 30},
   {10, -5, -65, 30}
 };
@@ -129,9 +129,9 @@ int main()
         ThisThread::sleep_for(50ms);
       }
 
-      // Pause for 2 seconds between movements
-      printf("Pause for 2 seconds\r\n\r\n");
-      ThisThread::sleep_for(2s);
+      // Pause for 1 seconds between movements
+      printf("Pause for 1 seconds\r\n\r\n");
+      ThisThread::sleep_for(1s);
     }
     
     /*
