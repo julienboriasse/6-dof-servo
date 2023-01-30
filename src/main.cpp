@@ -8,17 +8,20 @@
 #define ANGLE_MIN -120
 #define ANGLE_MAX 90
 
+// current positions for each servo
 int current_positions[4] = {1, 1, 1, 1};
+
+// is each servo on target?
 int on_target[4] = {false, false, false, false};
 
+// target positions for each servo
 int target_positions[5][4] = {
-  {0, 45, 0, 20},
-  {45, 0, 15, 30},
-  {-45, 45, 45, -10},
-  {15, 15, 45, -10},
-  {-15, 25, 15, 0},
+  {0, 0, 0, 0},
+  {-40, 15, 0, 0},
+  {10, -15, 0, 0},
+  {60, -5, 0, 0},
+  {10, 10, 0, 0},
 };
-
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN USBTX
@@ -70,10 +73,10 @@ int main()
 
   // Servo motors outputs
   printf("Configure motors output pins\r\n");
-  Servo servo0(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00148, D11);
-  Servo servo1(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00161, D10);
+  Servo servo0(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00148, D10);
+  Servo servo1(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00161, D5);
   Servo servo2(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00172, D9);
-  Servo servo3(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00168, D5);
+  Servo servo3(-120, 90, PWM_PERIOD, 0.0003, 0.0028, 0.00168, D11);
 
   while (1)
   {
